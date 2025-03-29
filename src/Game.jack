@@ -1,14 +1,61 @@
-class Game{
+class Game {
     field int score; 
     field Ball ball;
     field Map map;
+    field boolean isGameStarted;
+    field Wall wall;
 
-    constructor Game new(){
+    constructor Game new() {
         let score = 0;
         let ball = Ball.new();
         let map = Map.new();
+        let wall = Wall.new();
+        let isGameStarted = false;
         return this;
     }
 
-    
+
+    // ну это просто вечный цикл, который запускается в Main
+    // наверное можно сделать чтобы игра запускалась по клику пробела
+    method void run() {
+        var char key;
+        var boolean exit;
+        let exit = false;
+        
+        while (~exit) {
+            let key = Keyboard.keyPressed();
+
+            if (key = 32) {  // пробел
+                do ball.jump();
+            }
+                
+            //do map.updateMap();
+            do wall.move();
+            do ball.update();
+                
+            // если мяч врезался в стену
+            if (wall.checkCollision(ball)) {
+                let isGameStarted = false;
+                do wall.reset();
+                do ball.reset();
+                let score = 0;
+                //do Output.printString("LOSE!");
+            }
+                
+            let score = score + 1;
+            
+            do Screen.clearScreen();
+
+            do map.draw();
+            do ball.draw();
+            do wall.draw();
+
+            do Output.moveCursor(0, 0);
+            do Output.printString("Score: ");
+            do Output.printInt(score);
+            
+            do Sys.wait(25);
+        }
+        return;
+    }
 }

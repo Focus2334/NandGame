@@ -1,7 +1,21 @@
-class Map{
-    constructor Map new()
-    {
+class Map {
+    field int offset;
+
+    constructor Map new() {
+        let offset = 0;
         return this;
     }
 
+    // мб придумаете как изменять Map
+    // у меня он просто рисует линию
+    // по которой прыгает мячик
+    method void updateMap() {
+        return;
+    }
+
+    method void draw() {
+        do Screen.setColor(true);
+        do Screen.drawLine(0, 160, 511, 160);
+        return;
+    }
 }

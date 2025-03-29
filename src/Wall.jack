@@ -1,0 +1,64 @@
+class Wall {
+    field int x, y;
+    field int width, height;
+    field int speed;
+
+    constructor Wall new() {
+        let x = 452;
+        let y = 160;
+        let width = 20;
+        let height = 52;
+        let speed = 3;
+        return this;
+    }
+
+    method void draw() {
+        do Screen.setColor(true);
+        do Screen.drawRectangle(x, y - height, x + width, y);
+        return;
+    }
+
+    method void move() {
+        let x = x - speed;
+        if (x < 0) {
+            do reset();
+        }
+        return;
+    }
+    
+    method boolean checkCollision(Ball ball) {
+        var int ballX, ballY, ballRadius;
+        var int wallRight, wallTop;
+        
+        let ballX = ball.getX();
+        let ballY = ball.getY();
+        let ballRadius = ball.getRadius();
+        
+        let wallRight = x + width;
+        let wallTop = y - height;
+        
+        if ((ballX + ballRadius > x) & (ballX - ballRadius < wallRight) &
+        (ballY + ballRadius > wallTop)) {
+            return true;
+        }
+        return false;
+    }
+    
+    method void reset() {
+        let x = 452;
+        return;
+    }
+    
+    method int getX() {
+        return x;
+    }
+    method int getY() {
+        return y;
+    }
+    method int getWidth() {
+        return width;
+    }
+    method int getHeight() {
+        return height;
+    }
+}

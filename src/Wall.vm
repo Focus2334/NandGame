@@ -1,0 +1,127 @@
+function Wall.new 0
+push constant 5
+call Memory.alloc 1
+pop pointer 0
+push constant 452
+pop this 0
+push constant 160
+pop this 1
+push constant 20
+pop this 2
+push constant 52
+pop this 3
+push constant 3
+pop this 4
+push pointer 0
+return
+function Wall.draw 0
+push argument 0
+pop pointer 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 3
+sub
+push this 0
+push this 2
+add
+push this 1
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+return
+function Wall.update 0
+push argument 0
+pop pointer 0
+push this 0
+push this 4
+sub
+pop this 0
+push this 0
+push constant 0
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call Wall.reset 1
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
+function Wall.checkCollision 5
+push argument 0
+pop pointer 0
+push argument 1
+call Ball.getX 1
+pop local 0
+push argument 1
+call Ball.getY 1
+pop local 1
+push argument 1
+call Ball.getRadius 1
+pop local 2
+push this 0
+push this 2
+add
+pop local 3
+push this 1
+push this 3
+sub
+pop local 4
+push local 0
+push local 2
+add
+push this 0
+gt
+push local 0
+push local 2
+sub
+push local 3
+lt
+and
+push local 1
+push local 2
+add
+push local 4
+gt
+and
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+not
+return
+label IF_FALSE0
+push constant 0
+return
+function Wall.reset 0
+push argument 0
+pop pointer 0
+push constant 452
+pop this 0
+push constant 0
+return
+function Wall.getX 0
+push argument 0
+pop pointer 0
+push this 0
+return
+function Wall.getY 0
+push argument 0
+pop pointer 0
+push this 1
+return
+function Wall.getWidth 0
+push argument 0
+pop pointer 0
+push this 2
+return
+function Wall.getHeight 0
+push argument 0
+pop pointer 0
+push this 3
+return
