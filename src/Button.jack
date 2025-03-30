@@ -1,0 +1,24 @@
+class Button {
+    field string text;
+    field int x, y, width, height;
+
+    constructor Button new(int ax, int ay, int awidth, int aheight, string atext) {
+        let text = atext;
+        let x = ax;
+        let y = ay;
+        let width = awidth;
+        let height = aheight;
+        return this;
+    }
+
+    method void print() {
+        do Screen.setColor(true);
+        do Screen.drawRectangle(x, y, x + width, y + height);
+        do Screen.setColor(false);
+        do Screen.drawRectangle(x + 4, y + 4, x + width - 4, y + height - 4);
+        do Output.moveCursor(x / 11, y / 5 + 1);
+        do Screen.setColor(true);
+        do Output.printString(text);
+        return;
+    }
+}

@@ -1,12 +1,15 @@
 class Game {
-    field int score; 
+    field int currentScore, bestScore; 
     field Ball ball;
     field Map map;
     field boolean isGameStarted;
     field Wall wall;
 
+    //ИНИЦИАЛИЗАЦИЯ НОВОЙ ИГРЫ
     constructor Game new() {
-        let score = 0;
+
+        let currentScore = 0;
+        let bestScore = 0;
         let ball = Ball.new();
         let map = Map.new();
         let wall = Wall.new();
@@ -14,10 +17,42 @@ class Game {
         return this;
     }
 
+    //ЗАПУСК ИГРЫ
+    method void start() {
+        while (true) {
+            do start_menu();
+            do run();
+        }
+        return;
+    }
 
-    // ну это просто вечный цикл, который запускается в Main
-    // наверное можно сделать чтобы игра запускалась по клику пробела
-    method void run() {
+    //МЕНЮ ПЕРЕД НАЧАЛОМ ИГРЫ
+    method void start_menu() {
+        var boolean start;
+        var Button btn;
+        var int key;
+        let start = false;
+        
+        do Screen.clearScreen();
+
+        do Output.moveCursor(4, 23);
+        do Output.printString("Best score is ");
+        do Output.printInt(bestScore);
+
+        let btn = Button.new(130, 100, 250, 50, "PRESS ENTER TO START");
+        do btn.print();
+
+        while (~start) {
+            let key = Keyboard.keyPressed();
+            if (key = 128) {
+                let start = true;
+            }
+        }
+        return;
+    }
+
+    //ПРОЦЕСС ИГРЫ
+    method void run() { //TODO: переполнение памяти!!!
         var char key;
         var boolean exit;
         let exit = false;
@@ -25,8 +60,11 @@ class Game {
         while (~exit) {
             let key = Keyboard.keyPressed();
 
-            if (key = 32) {  // пробел
+            if (key = 32) {
                 do ball.jump();
+            }
+            if (key = 140) {
+                do pause_menu();
             }
                 
             //do map.updateMap();
@@ -38,11 +76,14 @@ class Game {
                 let isGameStarted = false;
                 do wall.reset();
                 do ball.reset();
-                let score = 0;
-                //do Output.printString("LOSE!");
+                if (currentScore > bestScore) {
+                    let bestScore = currentScore;
+                }
+                let currentScore = 0;
+                return;
             }
                 
-            let score = score + 1;
+            let currentScore = currentScore + 1;
             
             do Screen.clearScreen();
 
@@ -51,11 +92,39 @@ class Game {
             do wall.draw();
 
             do Output.moveCursor(0, 0);
-            do Output.printString("Score: ");
-            do Output.printInt(score);
+            do Output.printString("Current score: ");
+            do Output.printInt(currentScore);
             
             do Sys.wait(25);
         }
+        return;
+    }
+
+    //МЕНЮ ПАУЗЫ (по ESC)
+    method void pause_menu()
+    {
+        var boolean continue;
+        var Button btn;
+        var int key;
+        let continue = false;
+        
+        do Screen.clearScreen();
+
+        do Output.moveCursor(4, 21);
+        do Output.printString("Current score is ");
+        do Output.printInt(currentScore);
+
+        let btn = Button.new(130, 100, 250, 50, "PRESS ESC TO CONTINUE");
+        do btn.print();
+
+        do Sys.wait(100);
+        while (~continue) {
+            let key = Keyboard.keyPressed();
+            if (key = 140) {
+                let continue = true;
+            }
+        }
+        do Sys.wait(100);
         return;
     }
 }

@@ -1,5 +1,5 @@
 function Wall.new 0
-push constant 5
+push constant 6
 call Memory.alloc 1
 pop pointer 0
 push constant 452
@@ -8,7 +8,7 @@ push constant 160
 pop this 1
 push constant 20
 pop this 2
-push constant 52
+push constant 50
 pop this 3
 push constant 3
 pop this 4
@@ -33,7 +33,7 @@ call Screen.drawRectangle 4
 pop temp 0
 push constant 0
 return
-function Wall.update 0
+function Wall.move 0
 push argument 0
 pop pointer 0
 push this 0
