@@ -1,5 +1,5 @@
 class Game {
-    field int currentScore, bestScore; 
+    field int currentScore, bestScore;
     field Ball ball;
     field Map map;
     field boolean isGameStarted;
@@ -55,7 +55,10 @@ class Game {
     method void run() { //TODO: переполнение памяти!!!
         var char key;
         var boolean exit;
+        var string scoreString;
         let exit = false;
+    
+        let scoreString = "Current score: ";
         
         while (~exit) {
             let key = Keyboard.keyPressed();
@@ -92,7 +95,7 @@ class Game {
             do wall.draw();
 
             do Output.moveCursor(0, 0);
-            do Output.printString("Current score: ");
+            do Output.printString(scoreString);
             do Output.printInt(currentScore);
             
             do Sys.wait(25);

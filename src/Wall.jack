@@ -26,6 +26,8 @@ class Wall {
         }
         return;
     }
+
+
     
     method boolean checkCollision(Ball ball) {
         var int ballX, ballY, ballRadius;

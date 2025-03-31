@@ -11,6 +11,11 @@ class Button {
         return this;
     }
 
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
     method void print() {
         do Screen.setColor(true);
         do Screen.drawRectangle(x, y, x + width, y + height);
