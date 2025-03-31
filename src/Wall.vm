@@ -52,6 +52,29 @@ pop temp 0
 label IF_FALSE0
 push constant 0
 return
+function Wall.increaseSpeed 0
+push argument 0
+pop pointer 0
+push this 4
+push constant 1
+add
+pop this 4
+push constant 0
+return
+function Wall.slowTime 0
+push argument 0
+pop pointer 0
+push constant 2
+pop this 4
+push constant 0
+return
+function Wall.defaultSpeed 0
+push argument 0
+pop pointer 0
+push constant 3
+pop this 4
+push constant 0
+return
 function Wall.checkCollision 5
 push argument 0
 pop pointer 0
@@ -120,7 +143,7 @@ eq
 if-goto IF_TRUE1
 goto IF_FALSE1
 label IF_TRUE1
-push constant 60
+push constant 70
 pop this 3
 push constant 0
 return

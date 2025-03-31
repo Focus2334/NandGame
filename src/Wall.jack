@@ -27,7 +27,20 @@ class Wall {
         return;
     }
 
+    method void increaseSpeed() {
+        let speed = speed + 1;
+        return;
+    }
 
+    method void slowTime() {
+        let speed = 2;
+        return;
+    }
+
+    method void defaultSpeed() {
+        let speed = 3;
+        return;
+    }
     
     method boolean checkCollision(Ball ball) {
         var int ballX, ballY, ballRadius;

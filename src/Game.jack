@@ -1,7 +1,8 @@
 class Game {
-    field int currentScore, bestScore;
+    field int currentScore, bestScore, lastHundred;
     field Ball ball;
     field Map map;
+    field Power powersMenu;
     field boolean isGameStarted;
     field Wall wall;
 
@@ -9,6 +10,7 @@ class Game {
     constructor Game new() {
 
         let currentScore = 0;
+        let lastHundred = 0;
         let bestScore = 0;
         let ball = Ball.new();
         let map = Map.new();
@@ -52,13 +54,25 @@ class Game {
     }
 
     //ПРОЦЕСС ИГРЫ
-    method void run() { //TODO: переполнение памяти!!!
+    method void run() {
         var char key;
         var boolean exit;
-        var string scoreString;
+        var string scoreString, f2String, f3String;
+        var boolean isImmortal, immortalUsed, isSlowed, slowUsed;
+        var int immortalCounter, temp;
+
+        let temp = 0;
+        do wall.defaultSpeed();
         let exit = false;
+        let isImmortal = false;
+        let immortalUsed = false;
+        let isSlowed = false;
+        let slowUsed = false;
+        let immortalCounter = 0;
     
         let scoreString = "Current score: ";
+        let f2String = "F2";
+        let f3String = "F3";
         
         while (~exit) {
             let key = Keyboard.keyPressed();
@@ -69,6 +83,20 @@ class Game {
             if (key = 140) {
                 do pause_menu();
             }
+            if (key = 142) {
+                if (~immortalUsed) {
+                    let isImmortal = true;
+                    let immortalUsed = true;
+                    let immortalCounter = 0;
+                }
+            }
+            if (key = 143) {
+                if (~slowUsed) {
+                    let slowUsed = true;
+                    let isSlowed = true;
+                    do wall.slowTime();
+                }
+            }
                 
             //do map.updateMap();
             do wall.move();
@@ -76,23 +104,52 @@ class Game {
                 
             // если мяч врезался в стену
             if (wall.checkCollision(ball)) {
-                let isGameStarted = false;
-                do wall.reset();
-                do ball.reset();
-                if (currentScore > bestScore) {
-                    let bestScore = currentScore;
+                if (~isImmortal) {
+                    let isGameStarted = false;
+                    do wall.reset();
+                    do ball.reset();
+                    if (currentScore > bestScore) {
+                        let bestScore = currentScore;
+                    }
+                    let currentScore = 0;
+                    return;
                 }
-                let currentScore = 0;
-                return;
+                else {
+                    do wall.reset();
+                    let immortalCounter = immortalCounter + 1;
+                }
             }
-                
+
+            if (immortalCounter = 5) {
+                let isImmortal = false;
+                let immortalCounter = 0;
+            }
+            
             let currentScore = currentScore + 1;
+            let temp = lastHundred + 100;
+            if (currentScore > temp) {
+                let lastHundred = temp;
+                do wall.increaseSpeed();
+            }
             
             do Screen.clearScreen();
 
             do map.draw();
             do ball.draw();
             do wall.draw();
+
+            do Power.draw();
+            do Output.moveCursor(1, 54);
+            do Output.printString(f2String);
+            do Output.moveCursor(1, 60);
+            do Output.printString(f3String);
+
+            if (immortalUsed) {
+                do Power.crossF2();
+            }
+            if (slowUsed) {
+                do Power.crossF3();
+            }
 
             do Output.moveCursor(0, 0);
             do Output.printString(scoreString);
@@ -102,7 +159,7 @@ class Game {
         }
         return;
     }
-
+    
     //МЕНЮ ПАУЗЫ (по ESC)
     method void pause_menu()
     {
