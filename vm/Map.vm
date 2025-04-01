@@ -6,11 +6,6 @@ push constant 0
 pop this 0
 push pointer 0
 return
-function Map.updateMap 0
-push argument 0
-pop pointer 0
-push constant 0
-return
 function Map.draw 0
 push argument 0
 pop pointer 0
@@ -23,6 +18,14 @@ push constant 160
 push constant 511
 push constant 160
 call Screen.drawLine 4
+pop temp 0
+push constant 0
+return
+function Map.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
 pop temp 0
 push constant 0
 return

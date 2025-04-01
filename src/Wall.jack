@@ -2,12 +2,13 @@ class Wall {
     field int x, y;
     field int width, height;
     field int speed;
+    field Random rnd;
 
     constructor Wall new() {
         let x = 452;
         let y = 160;
         let width = 20;
-        let height = 52;
+        let height = 50;
         let speed = 3;
         return this;
     }
@@ -25,6 +26,16 @@ class Wall {
         }
         return;
     }
+
+    method void increaseSpeed() {
+        let speed = speed + 1;
+        return;
+    }
+
+    method void defaultSpeed() {
+        let speed = 3;
+        return;
+    }
     
     method boolean checkCollision(Ball ball) {
         var int ballX, ballY, ballRadius;
@@ -37,8 +48,9 @@ class Wall {
         let wallRight = x + width;
         let wallTop = y - height;
         
-        if ((ballX + ballRadius > x) & (ballX - ballRadius < wallRight) &
-        (ballY + ballRadius > wallTop)) {
+        if ((ballX + ballRadius > x)
+            & (ballX - ballRadius < wallRight)
+            & (ballY + ballRadius > wallTop)) {
             return true;
         }
         return false;
@@ -46,7 +58,19 @@ class Wall {
     
     method void reset() {
         let x = 452;
-        return;
+        if (height = 50) {
+            let height = 40;
+            return;
+        }
+        if (height = 40) {
+            let height = 70;
+            return;
+        }
+        else 
+        {
+            let height = 50;
+            return;
+        }
     }
     
     method int getX() {

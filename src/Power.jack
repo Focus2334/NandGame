@@ -1,0 +1,26 @@
+// Класс, отвечающий за отображение суперспособностей
+
+class Power {
+    function void draw() {
+        do Screen.setColor(true);
+        do Screen.drawRectangle(411, 1, 511, 26);
+        do Screen.setColor(false);
+        do Screen.drawRectangle(415, 5, 459, 22);
+        do Screen.drawRectangle(463, 5, 507, 22);
+        return;
+    }
+
+    function void crossF2() {
+        do Screen.setColor(true);
+        do Screen.drawLine(415, 5, 459, 22);
+        do Screen.drawLine(459, 5, 415, 22);
+        return;
+    }
+
+    function void crossF3() {
+        do Screen.setColor(true);
+        do Screen.drawLine(463, 5, 507, 22);
+        do Screen.drawLine(507, 5, 463, 22);
+        return;
+    }
+}

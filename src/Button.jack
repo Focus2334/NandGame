@@ -1,0 +1,31 @@
+// Кнопка с текстом. Используется в стартовом меню и меню паузы
+
+class Button {
+    field int x, y, width, height;
+    field string text;
+
+    constructor Button new(int px, int py, int pwidth, int pheight, string ptext) {
+        let text = ptext;
+        let x = px;
+        let y = py;
+        let width = pwidth;
+        let height = pheight;
+        return this;
+    }
+
+    method void print() {
+        do Screen.setColor(true);
+        do Screen.drawRectangle(x, y, x + width, y + height);
+        do Screen.setColor(false);
+        do Screen.drawRectangle(x + 4, y + 4, x + width - 4, y + height - 4);
+        do Output.moveCursor(x / 11, y / 5 + 1);
+        do Screen.setColor(true);
+        do Output.printString(text);
+        return;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+}

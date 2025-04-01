@@ -1,0 +1,34 @@
+// Меня перед началом игры
+class StartMenu {
+    
+    method void draw(int bstscore) {
+        var boolean start;
+        var int bestScore;
+        var Button btn;
+        var int key;
+
+        let start = false;
+        let bestScore = bstscore;
+        
+        do Screen.clearScreen();
+
+        // Выводим лучший результат
+        do Output.moveCursor(4, 23);
+        do Output.printString("Best score is ");
+        do Output.printInt(bestScore);
+
+        // Рисуем кнопку с сообщением
+        let btn = Button.new(130, 100, 250, 50, "PRESS ENTER TO START");
+        do btn.print();
+
+        // Ждем, когда игрок нажмет Enter
+        while (~start) {
+            let key = Keyboard.keyPressed();
+            if (key = 128) {
+                let start = true;
+            }
+        }
+        return;
+    }
+
+}

@@ -1,3 +1,5 @@
+// Шар - игровой персонаж
+
 class Ball {
     field int x, y;
     field int radius;
@@ -16,6 +18,12 @@ class Ball {
     method void draw() {
         do Screen.setColor(true);
         do Screen.drawCircle(x, y, radius);
+        do Screen.setColor(false);
+        do Screen.drawCircle(x, y, radius-2);
+        do Screen.setColor(true);
+        do Screen.drawCircle(x - 3, y - 2, 2);
+        do Screen.drawCircle(x + 3, y - 2, 2);
+        do Screen.drawRectangle(x-4, y+3, x + 4, y +4);
         return;
     }
 
@@ -50,6 +58,11 @@ class Ball {
         let y = 150;
         let isJumping = false;
         let jumpHeight = 0;
+        return;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
         return;
     }
 
