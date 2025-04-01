@@ -1,0 +1,31 @@
+// Приветственное меню с информацией об игре
+
+class HelloMenu {
+    
+    method void draw() {
+        var boolean next;
+        var Button btn;
+        var int key;
+
+        let next = false;
+        do Screen.clearScreen();
+
+        do Output.moveCursor(4, 20);
+        do Output.printString("Welcome to the Smile Race!");
+        
+        do Output.moveCursor(8, 10);
+        do Output.printString("In this game you can use Space, F2 and F3:");
+        do Output.moveCursor(11, 12);
+        do Output.printString("- Space for jump");
+        do Output.moveCursor(13, 12);
+        do Output.printString("- F2 for immortal in 3 collisions");
+        do Output.moveCursor(15, 12);
+        do Output.printString("- F3 for reduce the speed to 3");
+
+        do Output.moveCursor(21, 23);
+        do Output.printString("Created by FT-104");
+
+        do Sys.wait(5000);
+        return;
+    }
+}

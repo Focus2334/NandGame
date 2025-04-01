@@ -1,14 +1,17 @@
+// Основной класс игры. Запускает стартовое меню, а затем и саму игру
+
 class Game {
-    field int currentScore, bestScore, lastHundred;
     field Ball ball;
     field Map map;
     field Power powersMenu;
-    field boolean isGameStarted;
+    field HelloMenu helloMenu;
+    field StartMenu startMenu;
     field Wall wall;
+    field int currentScore, bestScore, lastHundred;
+    field boolean isGameStarted;
 
     //ИНИЦИАЛИЗАЦИЯ НОВОЙ ИГРЫ
     constructor Game new() {
-
         let currentScore = 0;
         let lastHundred = 0;
         let bestScore = 0;
@@ -21,34 +24,10 @@ class Game {
 
     //ЗАПУСК ИГРЫ
     method void start() {
+        do helloMenu.draw();
         while (true) {
-            do start_menu();
+            do startMenu.draw(bestScore);
             do run();
-        }
-        return;
-    }
-
-    //МЕНЮ ПЕРЕД НАЧАЛОМ ИГРЫ
-    method void start_menu() {
-        var boolean start;
-        var Button btn;
-        var int key;
-        let start = false;
-        
-        do Screen.clearScreen();
-
-        do Output.moveCursor(4, 23);
-        do Output.printString("Best score is ");
-        do Output.printInt(bestScore);
-
-        let btn = Button.new(130, 100, 250, 50, "PRESS ENTER TO START");
-        do btn.print();
-
-        while (~start) {
-            let key = Keyboard.keyPressed();
-            if (key = 128) {
-                let start = true;
-            }
         }
         return;
     }
@@ -57,33 +36,36 @@ class Game {
     method void run() {
         var char key;
         var boolean exit;
-        var string scoreString, f2String, f3String;
+        var string scoreString, f2String, f3String; // Здесь строки нужны, чтобы избежать переполнения
+        
+        // Все, что относится к способностям
         var boolean isImmortal, immortalUsed, isSlowed, slowUsed;
-        var int immortalCounter, temp;
+        var int immortalCounter;
 
-        let temp = 0;
-        do wall.defaultSpeed();
         let exit = false;
         let isImmortal = false;
         let immortalUsed = false;
         let isSlowed = false;
         let slowUsed = false;
         let immortalCounter = 0;
-    
         let scoreString = "Current score: ";
         let f2String = "F2";
         let f3String = "F3";
-        
-        while (~exit) {
-            let key = Keyboard.keyPressed();
 
+        do wall.defaultSpeed();
+        
+        // Бежим, пока не проиграли или не вышли из игры
+        while (~exit) {
+        
+            let key = Keyboard.keyPressed();
             if (key = 32) {
                 do ball.jump();
             }
             if (key = 140) {
-                do pause_menu();
+                do pauseMenu();
             }
             if (key = 142) {
+                // Запускаем бессмертие на 3 удара, если еще не запускали
                 if (~immortalUsed) {
                     let isImmortal = true;
                     let immortalUsed = true;
@@ -91,18 +73,18 @@ class Game {
                 }
             }
             if (key = 143) {
+                // Сбрасываем скорость до дефолтной, если еще не сбрасывали
                 if (~slowUsed) {
                     let slowUsed = true;
                     let isSlowed = true;
-                    do wall.slowTime();
+                    do wall.defaultSpeed();
                 }
             }
                 
-            //do map.updateMap();
             do wall.move();
             do ball.update();
                 
-            // если мяч врезался в стену
+            // Проверка столкновения со стеной
             if (wall.checkCollision(ball)) {
                 if (~isImmortal) {
                     let isGameStarted = false;
@@ -115,57 +97,68 @@ class Game {
                     return;
                 }
                 else {
+                    // Если режим бессмертия, то считаем + 1 столкновение
                     do wall.reset();
                     let immortalCounter = immortalCounter + 1;
                 }
             }
 
-            if (immortalCounter = 5) {
+            // Если использовали 3 столкновения в бессмертии, то выключаем его
+            if (immortalCounter = 3) {
                 let isImmortal = false;
                 let immortalCounter = 0;
             }
             
+            // Обновляем счетчик. Каждую сотню увеличиваем скорость на 1
             let currentScore = currentScore + 1;
-            let temp = lastHundred + 100;
-            if (currentScore > temp) {
-                let lastHundred = temp;
+            if (currentScore > (lastHundred + 100)) {
+                let lastHundred = lastHundred + 100;
                 do wall.increaseSpeed();
             }
             
-            do Screen.clearScreen();
+            // Перерисовываем объекты на экране
+            do updateRunElements();
 
-            do map.draw();
-            do ball.draw();
-            do wall.draw();
-
-            do Power.draw();
+            // Перерисовываем все надписи
             do Output.moveCursor(1, 54);
             do Output.printString(f2String);
             do Output.moveCursor(1, 60);
             do Output.printString(f3String);
 
+            do Output.moveCursor(0, 0);
+            do Output.printString(scoreString);
+            do Output.printInt(currentScore);
+
+            // Если использовали суперсилу, то ее зачеркиваем
             if (immortalUsed) {
                 do Power.crossF2();
             }
             if (slowUsed) {
                 do Power.crossF3();
             }
-
-            do Output.moveCursor(0, 0);
-            do Output.printString(scoreString);
-            do Output.printInt(currentScore);
             
             do Sys.wait(25);
         }
         return;
     }
+
+    // ОБНОВЛЕНИЕ ОБЪЕКТОВ НА ЭКРАНЕ
+    method void updateRunElements() {
+        do Screen.clearScreen();
+        do map.draw();
+        do ball.draw();
+        do wall.draw();
+        do Power.draw();
+        return;
+    }
     
     //МЕНЮ ПАУЗЫ (по ESC)
-    method void pause_menu()
+    method void pauseMenu()
     {
         var boolean continue;
         var Button btn;
         var int key;
+
         let continue = false;
         
         do Screen.clearScreen();

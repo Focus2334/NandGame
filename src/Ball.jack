@@ -1,3 +1,5 @@
+// Шар - игровой персонаж
+
 class Ball {
     field int x, y;
     field int radius;

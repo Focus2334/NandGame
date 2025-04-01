@@ -61,13 +61,6 @@ add
 pop this 4
 push constant 0
 return
-function Wall.slowTime 0
-push argument 0
-pop pointer 0
-push constant 2
-pop this 4
-push constant 0
-return
 function Wall.defaultSpeed 0
 push argument 0
 pop pointer 0

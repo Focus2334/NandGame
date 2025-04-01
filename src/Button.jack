@@ -1,19 +1,16 @@
+// Кнопка с текстом. Используется в стартовом меню и меню паузы
+
 class Button {
-    field string text;
     field int x, y, width, height;
+    field string text;
 
-    constructor Button new(int ax, int ay, int awidth, int aheight, string atext) {
-        let text = atext;
-        let x = ax;
-        let y = ay;
-        let width = awidth;
-        let height = aheight;
+    constructor Button new(int px, int py, int pwidth, int pheight, string ptext) {
+        let text = ptext;
+        let x = px;
+        let y = py;
+        let width = pwidth;
+        let height = pheight;
         return this;
-    }
-
-    method void dispose() {
-        do Memory.deAlloc(this);
-        return;
     }
 
     method void print() {
@@ -24,6 +21,11 @@ class Button {
         do Output.moveCursor(x / 11, y / 5 + 1);
         do Screen.setColor(true);
         do Output.printString(text);
+        return;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
         return;
     }
 }

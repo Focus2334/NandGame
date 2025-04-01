@@ -1,3 +1,5 @@
+// Класс, отвечающий за отображение суперспособностей
+
 class Power {
     function void draw() {
         do Screen.setColor(true);

@@ -1,16 +1,11 @@
+// Карта, по которой катится шарик
+
 class Map {
     field int offset;
 
     constructor Map new() {
         let offset = 0;
         return this;
-    }
-
-    // мб придумаете как изменять Map
-    // у меня он просто рисует линию
-    // по которой прыгает мячик
-    method void updateMap() {
-        return;
     }
 
     method void draw() {

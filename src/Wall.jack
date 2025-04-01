@@ -32,11 +32,6 @@ class Wall {
         return;
     }
 
-    method void slowTime() {
-        let speed = 2;
-        return;
-    }
-
     method void defaultSpeed() {
         let speed = 3;
         return;
@@ -53,8 +48,9 @@ class Wall {
         let wallRight = x + width;
         let wallTop = y - height;
         
-        if ((ballX + ballRadius > x) & (ballX - ballRadius < wallRight) &
-        (ballY + ballRadius > wallTop)) {
+        if ((ballX + ballRadius > x)
+            & (ballX - ballRadius < wallRight)
+            & (ballY + ballRadius > wallTop)) {
             return true;
         }
         return false;
