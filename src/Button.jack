@@ -1,15 +1,21 @@
 // Кнопка с текстом. Используется в стартовом меню и меню паузы
 
 class Button {
-    field int x, y, width, height;
+    field int x, y, width, height, xtext, ytext;
     field string text;
 
-    constructor Button new(int px, int py, int pwidth, int pheight, string ptext) {
+    constructor Button new(
+                int px,int py,
+                int pwidth, int pheight,
+                string ptext, 
+                int pxtext, int pytext) {
         let text = ptext;
         let x = px;
         let y = py;
         let width = pwidth;
         let height = pheight;
+        let xtext = pxtext;
+        let ytext = pytext;
         return this;
     }
 
@@ -17,8 +23,8 @@ class Button {
         do Screen.setColor(true);
         do Screen.drawRectangle(x, y, x + width, y + height);
         do Screen.setColor(false);
-        do Screen.drawRectangle(x + 4, y + 4, x + width - 4, y + height - 4);
-        do Output.moveCursor(x / 11, y / 5 + 1);
+        do Screen.drawRectangle(x + 2, y + 2, x + width - 2, y + height - 2);
+        do Output.moveCursor(xtext, ytext);
         do Screen.setColor(true);
         do Output.printString(text);
         return;

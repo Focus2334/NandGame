@@ -1,34 +1,48 @@
-// Меня перед началом игры
+// Меню перед началом игры
 class StartMenu {
-    
-    method void draw(int bstscore) {
-        var boolean start;
+    field boolean isBall;
+
+    constructor StartMenu new() {
+        let isBall = true;
+        return this;
+    }
+
+    method void draw() {
         var int bestScore;
         var Button btn;
+      
+        do Screen.clearScreen();
+
+        // Рисуем кнопку для старта
+        let btn = Button.new(120, 70, 250, 40, "PRESS ENTER TO START", 8, 21);
+        do btn.print();
+
+        // Рисуем кнопку для меню настроек
+        let btn = Button.new(120, 125, 250, 40, "PRESS F4 FOR SETTINGS", 13, 21);
+        do btn.print();
+        
+        return;
+    }
+
+    // Ждем, когда игрок нажмет Enter или ESC
+    method boolean wait() {
+        var boolean start;
+        var SettingsMenu settingsMenu;
         var int key;
 
         let start = false;
-        let bestScore = bstscore;
-        
-        do Screen.clearScreen();
 
-        // Выводим лучший результат
-        do Output.moveCursor(4, 23);
-        do Output.printString("Best score is ");
-        do Output.printInt(bestScore);
-
-        // Рисуем кнопку с сообщением
-        let btn = Button.new(130, 100, 250, 50, "PRESS ENTER TO START");
-        do btn.print();
-
-        // Ждем, когда игрок нажмет Enter
         while (~start) {
             let key = Keyboard.keyPressed();
             if (key = 128) {
                 let start = true;
             }
+            if (key = 144) {
+                let isBall = settingsMenu.draw(isBall);
+                do draw();
+            }
         }
-        return;
-    }
 
+        return isBall;
+    }
 }

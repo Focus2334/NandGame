@@ -8,16 +8,16 @@ class Game {
     field StartMenu startMenu;
     field Wall wall;
     field int currentScore, bestScore, lastHundred;
-    field boolean isGameStarted;
+    field boolean isGameStarted, isBall;
 
     //ИНИЦИАЛИЗАЦИЯ НОВОЙ ИГРЫ
     constructor Game new() {
         let currentScore = 0;
         let lastHundred = 0;
         let bestScore = 0;
-        let ball = Ball.new();
         let map = Map.new();
         let wall = Wall.new();
+        let startMenu = StartMenu.new();
         let isGameStarted = false;
         return this;
     }
@@ -26,7 +26,9 @@ class Game {
     method void start() {
         do helloMenu.draw();
         while (true) {
-            do startMenu.draw(bestScore);
+            do startMenu.draw();
+            let isBall = startMenu.wait();
+            let ball = Ball.new(100, 150);
             do run();
         }
         return;
@@ -36,7 +38,7 @@ class Game {
     method void run() {
         var char key;
         var boolean exit;
-        var string scoreString, f2String, f3String; // Здесь строки нужны, чтобы избежать переполнения
+        var string scoreString, f2String, f3String; // Эти строки нужны, чтобы избежать переполнения
         
         // Все, что относится к способностям
         var boolean isImmortal, immortalUsed, isSlowed, slowUsed;
@@ -146,7 +148,7 @@ class Game {
     method void updateRunElements() {
         do Screen.clearScreen();
         do map.draw();
-        do ball.draw();
+        do ball.draw(isBall);
         do wall.draw();
         do Power.draw();
         return;
@@ -167,7 +169,7 @@ class Game {
         do Output.printString("Current score is ");
         do Output.printInt(currentScore);
 
-        let btn = Button.new(130, 100, 250, 50, "PRESS ESC TO CONTINUE");
+        let btn = Button.new(130, 100, 250, 50, "PRESS ESC TO CONTINUE", 11, 22);
         do btn.print();
 
         do Sys.wait(100);

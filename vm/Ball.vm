@@ -2,9 +2,9 @@ function Ball.new 0
 push constant 5
 call Memory.alloc 1
 pop pointer 0
-push constant 100
+push argument 0
 pop this 0
-push constant 150
+push argument 1
 pop this 1
 push constant 10
 pop this 2
@@ -14,13 +14,65 @@ push constant 0
 pop this 4
 push pointer 0
 return
-function Ball.draw 0
+function Ball.draw 1
 push argument 0
 pop pointer 0
+push argument 1
+pop local 0
 push constant 0
 not
 call Screen.setColor 1
 pop temp 0
+push local 0
+not
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 0
+push this 2
+sub
+push this 1
+push this 2
+sub
+push this 0
+push this 2
+add
+push this 1
+push this 2
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 2
+sub
+push constant 2
+add
+push this 1
+push this 2
+sub
+push constant 2
+add
+push this 0
+push this 2
+add
+push constant 2
+sub
+push this 1
+push this 2
+add
+push constant 2
+sub
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+goto IF_END0
+label IF_FALSE0
 push this 0
 push this 1
 push this 2
@@ -40,6 +92,7 @@ push constant 0
 not
 call Screen.setColor 1
 pop temp 0
+label IF_END0
 push this 0
 push constant 3
 sub
@@ -81,9 +134,18 @@ push constant 0
 call Screen.setColor 1
 pop temp 0
 push this 0
+push this 2
+sub
 push this 1
 push this 2
-call Screen.drawCircle 3
+sub
+push this 0
+push this 2
+add
+push this 1
+push this 2
+add
+call Screen.drawRectangle 4
 pop temp 0
 push constant 0
 return

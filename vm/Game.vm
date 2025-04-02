@@ -1,5 +1,5 @@
 function Game.new 0
-push constant 10
+push constant 11
 call Memory.alloc 1
 pop pointer 0
 push constant 0
@@ -8,12 +8,12 @@ push constant 0
 pop this 8
 push constant 0
 pop this 7
-call Ball.new 0
-pop this 0
 call Map.new 0
 pop this 1
 call Wall.new 0
 pop this 5
+call StartMenu.new 0
+pop this 4
 push constant 0
 pop this 9
 push pointer 0
@@ -30,9 +30,15 @@ not
 not
 if-goto WHILE_END0
 push this 4
-push this 7
-call StartMenu.draw 2
+call StartMenu.draw 1
 pop temp 0
+push this 4
+call StartMenu.wait 1
+pop this 10
+push constant 100
+push constant 150
+call Ball.new 2
+pop this 0
 push pointer 0
 call Game.run 1
 pop temp 0
@@ -312,7 +318,8 @@ push this 1
 call Map.draw 1
 pop temp 0
 push this 0
-call Ball.draw 1
+push this 10
+call Ball.draw 2
 pop temp 0
 push this 5
 call Wall.draw 1
@@ -421,7 +428,9 @@ push constant 85
 call String.appendChar 2
 push constant 69
 call String.appendChar 2
-call Button.new 5
+push constant 11
+push constant 22
+call Button.new 7
 pop local 1
 push local 1
 call Button.print 1
