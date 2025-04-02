@@ -1,4 +1,4 @@
-// Шар - игровой персонаж
+// Шар - игровой персонаж. Новая функциональность - может быть квадратом)
 
 class Ball {
     field int x, y;
@@ -6,21 +6,33 @@ class Ball {
     field int jumpHeight;
     field boolean isJumping;
 
-    constructor Ball new() {
-        let x = 100;
-        let y = 150;
+    constructor Ball new(int px, int py) {
+        let x = px;
+        let y = py;
         let radius = 10;
         let jumpHeight = 0;
         let isJumping = false;
         return this;
     }
 
-    method void draw() {
+    // Рисует шар / квадрат в зависимости от выбранных настроек
+    method void draw(boolean pisBall) {
+        var boolean isBall;
+        let isBall = pisBall;
+
         do Screen.setColor(true);
-        do Screen.drawCircle(x, y, radius);
-        do Screen.setColor(false);
-        do Screen.drawCircle(x, y, radius-2);
-        do Screen.setColor(true);
+        if (~isBall) {
+            do Screen.drawRectangle(x - radius, y - radius, x + radius, y + radius);
+            do Screen.setColor(false);
+            do Screen.drawRectangle(x - radius + 2, y - radius + 2, x + radius - 2, y + radius - 2);
+            do Screen.setColor(true);
+        }
+        else {
+            do Screen.drawCircle(x, y, radius);
+            do Screen.setColor(false);
+            do Screen.drawCircle(x, y, radius-2);
+            do Screen.setColor(true);
+        }
         do Screen.drawCircle(x - 3, y - 2, 2);
         do Screen.drawCircle(x + 3, y - 2, 2);
         do Screen.drawRectangle(x-4, y+3, x + 4, y +4);
@@ -29,7 +41,7 @@ class Ball {
 
     method void erase() {
         do Screen.setColor(false);
-        do Screen.drawCircle(x, y, radius);
+        do Screen.drawRectangle(x - radius, y - radius, x + radius, y + radius);
         return;
     }
 

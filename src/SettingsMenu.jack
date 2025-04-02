@@ -1,0 +1,54 @@
+// Меню с настройками игры и доступными кнопками
+
+class SettingsMenu {
+
+    method boolean draw(boolean pisBall) {
+        var int key;
+        var boolean exit;
+        var Ball ball;
+        var boolean isBall;
+
+        let exit = false;
+
+        do Screen.clearScreen();
+
+        // Новая функциональность выбора персонажа:
+        do Output.moveCursor(3, 10);
+        do Output.printString("Choose the character (< >):");
+        let ball = Ball.new(100, 62);   
+        let isBall = pisBall;
+        do ball.draw(isBall);   
+
+        do Output.moveCursor(8, 10);
+        do Output.printString("In this game you can use Space, F2 and F3:");
+        do Output.moveCursor(11, 12);
+        do Output.printString("- Space for jump");
+        do Output.moveCursor(13, 12);
+        do Output.printString("- F2 for immortal in 3 collisions");
+        do Output.moveCursor(15, 12);
+        do Output.printString("- F3 for reduce the speed to 3"); 
+
+        do Output.moveCursor(19, 20);
+        do Output.printString("Press ESC to come back");
+
+        while (~exit) {
+            let key = Keyboard.keyPressed();
+            if (key = 140) {
+                let exit = true;
+            }
+            // Тоже относится к выбору персонажа
+            if (key = 130) {
+                do ball.erase();
+                let isBall = false;
+                do ball.draw(isBall);
+            }
+            if (key = 132) {
+                do ball.erase();
+                let isBall = true;
+                do ball.draw(isBall);
+            }
+        }
+
+        return isBall;
+    }
+}
