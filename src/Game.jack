@@ -7,13 +7,12 @@ class Game {
     field HelloMenu helloMenu;
     field StartMenu startMenu;
     field Wall wall;
-    field int currentScore, bestScore, lastHundred;
+    field int currentScore, bestScore;
     field boolean isGameStarted, isBall;
 
     //ИНИЦИАЛИЗАЦИЯ НОВОЙ ИГРЫ
     constructor Game new() {
         let currentScore = 0;
-        let lastHundred = 0;
         let bestScore = 0;
         let map = Map.new();
         let wall = Wall.new();
@@ -38,6 +37,7 @@ class Game {
     method void run() {
         var char key;
         var boolean exit;
+        var int lastHundred;
         var string scoreString, f2String, f3String; // Эти строки нужны, чтобы избежать переполнения
         
         // Все, что относится к способностям
@@ -50,6 +50,7 @@ class Game {
         let isSlowed = false;
         let slowUsed = false;
         let immortalCounter = 0;
+        let lastHundred = 0;
         let scoreString = "Current score: ";
         let f2String = "F2";
         let f3String = "F3";
@@ -116,6 +117,12 @@ class Game {
             if (currentScore > (lastHundred + 100)) {
                 let lastHundred = lastHundred + 100;
                 do wall.increaseSpeed();
+            }
+
+            // Избегаем переполнения счетчика
+            if (currentScore > 3000) {
+                let lastHundred = 0;
+                let currentScore = 0;
             }
             
             // Перерисовываем объекты на экране
