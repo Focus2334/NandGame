@@ -2,9 +2,10 @@ class Wall {
     field int x, y;
     field int width, height;
     field int speed;
-    field Random rnd;
+    field int rnd;
 
     constructor Wall new() {
+        let rnd = 14;
         let x = 452;
         let y = 160;
         let width = 20;
@@ -50,14 +51,31 @@ class Wall {
         
         if ((ballX + ballRadius > x)
             & (ballX - ballRadius < wallRight)
-            & (ballY + ballRadius > wallTop)) {
+            & (ballY + ballRadius > wallTop)
+            & (ballY < y)) {
             return true;
         }
         return false;
     }
     
     method void reset() {
+        
         let x = 452;
+
+        if (rnd > 150) {
+            let y = 130;
+        }
+        else {
+            let y = 160;
+        }
+
+        if (rnd < 300) {
+            let rnd = Math.multiply(rnd, 2);
+        }
+        else {
+            let rnd = Math.divide(rnd, 10);
+        }
+
         if (height = 50) {
             let height = 40;
             return;

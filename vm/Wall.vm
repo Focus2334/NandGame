@@ -2,9 +2,11 @@ function Wall.new 0
 push constant 6
 call Memory.alloc 1
 pop pointer 0
+push constant 14
+pop this 5
 push constant 452
 pop this 0
-push constant 160
+push constant 120
 pop this 1
 push constant 20
 pop this 2
@@ -105,6 +107,10 @@ add
 push local 4
 gt
 and
+push local 1
+push this 1
+lt
+and
 if-goto IF_TRUE0
 goto IF_FALSE0
 label IF_TRUE0
@@ -119,34 +125,64 @@ push argument 0
 pop pointer 0
 push constant 452
 pop this 0
-push this 3
-push constant 50
-eq
+push this 5
+push constant 150
+gt
 if-goto IF_TRUE0
 goto IF_FALSE0
 label IF_TRUE0
+push constant 130
+pop this 1
+goto IF_END0
+label IF_FALSE0
+push constant 160
+pop this 1
+label IF_END0
+push this 5
+push constant 300
+lt
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push this 5
+push constant 2
+call Math.multiply 2
+pop this 5
+goto IF_END1
+label IF_FALSE1
+push this 5
+push constant 10
+call Math.divide 2
+pop this 5
+label IF_END1
+push this 3
+push constant 50
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
 push constant 40
 pop this 3
 push constant 0
 return
-label IF_FALSE0
+label IF_FALSE2
 push this 3
 push constant 40
 eq
-if-goto IF_TRUE1
-goto IF_FALSE1
-label IF_TRUE1
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
 push constant 70
 pop this 3
 push constant 0
 return
-goto IF_END1
-label IF_FALSE1
+goto IF_END3
+label IF_FALSE3
 push constant 50
 pop this 3
 push constant 0
 return
-label IF_END1
+label IF_END3
 function Wall.getX 0
 push argument 0
 pop pointer 0
